@@ -76,8 +76,6 @@ kubectl apply                                                           \
 |                                                                       \
 tee --append $log                                                       \
                                                                         ;
-kubeconfig=/etc/kubernetes/admin.conf                                   ;
-sleep=10                                                                ;
 while true                                                              ;
 do                                                                      \
   kubectl get node                                                      \
@@ -89,7 +87,7 @@ do                                                                      \
   &&                                                                    \
   break                                                                 \
                                                                         ;
-  sleep $sleep                                                          ;
+  sleep 10                                                              ;
 done                                                                    ;
 sed --in-place                                                          \
   /$kube/d                                                              \
