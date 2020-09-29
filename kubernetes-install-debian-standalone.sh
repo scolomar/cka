@@ -12,6 +12,7 @@ sudo apt-get install -y kubelet kubeadm kubectl                                ;
 sudo apt-mark hold kubelet kubeadm kubectl                                     ;
 ip=< PRIVATE IP OF THE KUBERNETES MASTER >                                     ;
 echo $ip k8smaster | sudo tee -a /etc/hosts                                    ;
+#sudo sed -i /127.0.0.1/s/$/' 'k8smaster/ /etc/hosts                           #
 sudo kubeadm init                                                              \
   --control-plane-endpoint=k8smaster                                           \
   --pod-network-cidr=192.168.0.0/16                                            \
