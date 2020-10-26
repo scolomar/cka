@@ -10,11 +10,14 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg                  \
 sudo apt-get update && sudo apt-get install -y docker-ce                       ;
 #sudo apt-get update && sudo apt-get install -y docker.io                      #
 #sudo apt-get update && sudo apt-get install -y docker-engine                  #
-sudo apt-get install -y kubelet kubeadm kubectl                                ;
+version="1.18.10-00"                                                           ;
+sudo apt-get install -y                                                        \
+  kubelet=$version kubeadm=$version kubectl=$version --allow-downgrades        ;
 sudo apt-mark hold kubelet kubeadm kubectl                                     ;
-ip=< PRIVATE IP OF THE KUBERNETES MASTER >                                     ;
+ip=$( ip r | grep default | awk '{ print $9 }' )                               ;
 echo $ip k8smaster | sudo tee -a /etc/hosts                                    ;
 #sudo sed -i /127.0.0.1/s/$/' 'k8smaster/ /etc/hosts                           #
+sudo swapoff -a                                                                ;
 sudo kubeadm init                                                              \
   --control-plane-endpoint=k8smaster                                           \
   --pod-network-cidr=192.168.0.0/16                                            \
